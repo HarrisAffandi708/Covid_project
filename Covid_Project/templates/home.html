@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<body class="text-center">
+    <div class="container">
+      <div class="row">
+
+    <!-- UPDATES COLUMN -->
+    <div class="col-sm">
+      Scheduled updates:
+
+      {% for update in updates: %}
+      <div class="toast" data-autohide="false">
+        <div class="toast-header">
+          <strong class="mr-auto">{{ update['title'] }}</strong>\
+          <form action="/index" method="get">
+          <button type="submit" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" name=update_item value="{{ update['title'] }}">\
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </form>
+        </div>
+        <div class="toast-body">
+          {{ update['content'] }}\
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="col-sm">
+
+    <form action="/index" method="get" class="form-alarms">
+      <h1 class="h1 mb-3 font-weight-normal">{{title}}</h1>
+
+      <h2 class="h2 mb-3 font-weight-normal">Local 7-day infection rate in {{location}}: {{local_7day_infections}}</h2>
+
+      <h2 class="h2 mb-3 font-weight-normal">National 7-day infection rate in {{nation_location}}: {{national_7day_infections}}</h2>
+
+      <h2 class="h2 mb-3 font-weight-normal">National total hospital cases in {{nation_location}}:{{hospital_cases}}</h2>
+
+      <h2 class="h2 mb-3 font-weight-normal">National total deaths in {{nation_location}}:{{deaths_total}}</h2>
+
+      <br />
+      <h3 class="h3 mb-3 font-weight-normal">Schedule data updates</h3>
+
+      <input type="time" name="update" class="form-control">
+      <div class="checkbox mb-3">
+          <input type="checkbox" name="repeat" value="repeat">Repeat update
+      </div>
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" name="covid-data" value="covid-data"> Update Covid data
+        </label>
+      </div>
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" name="news" value="news"> Update news articles
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+      <p class="mt-5 mb-3 text-muted">© 2021</p>
+    </form>
+
+  </div>
+
+
+  <!-- NEWS COLUMN -->
+  <div class="col-sm">
+    News headlines:
+    {% for news in news_articles: %}
+    <div class="toast" data-autohide="false">
+      <div class="toast-header"> 
+        <strong class="mr-auto">{{ news }}</strong> 
+        <form action="/index" method="get">
+        <button type="submit" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" name=notif value="{{ news['title'] }}"> 
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </form>
+      </div>
+      <div class="toast-body"> 
+        {{ news['content'] }} 
+      </div> 
+    </div> 
+    {% endfor %}
+
+  </div>
+</div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(".toast").toast('show'); 
+    });
+</script>
+
+</body>
+</html>
